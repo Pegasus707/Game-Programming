@@ -1,0 +1,66 @@
+import pygame
+import sys
+
+# Step 1: Initialize Pygame
+pygame.init()
+
+# Step 2: Screen setup
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("2D Transformations")
+
+# Step 3: Colors
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+
+# Step 4: Clock to control FPS
+clock = pygame.time.Clock()
+
+# Step 5: Define a shape (rectangle as a Surface)
+shape_width, shape_height = 100, 60
+original_shape = pygame.Surface((shape_width, shape_height))
+original_shape.fill(RED)
+
+# Step 6: Transformation variables
+angle = 0
+scale_factor = 1.0
+position = [350, 270]
+
+# Step 7: Main loop
+running = True
+while running:
+    screen.fill(WHITE)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Step 8: Apply transformations
+    # a. Scaling
+    scaled_shape = pygame.transform.scale(
+        original_shape, 
+        (int(shape_width * scale_factor), int(shape_height * scale_factor))
+    )
+
+    # b. Rotation
+    rotated_shape = pygame.transform.rotate(scaled_shape, angle)
+
+    # c. Translation - blit at new position
+    rect = rotated_shape.get_rect(center=(position[0], position[1]))
+    screen.blit(rotated_shape, rect)
+
+    # Step 9: Update transformation values
+    angle += 1
+    scale_factor += 0.005
+    if scale_factor > 2:
+        scale_factor = 1.0
+
+    # Step 10: Draw original shape outline
+    pygame.draw.rect(screen, BLUE, (50, 50, shape_width, shape_height), 2)
+
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
+sys.exit()
