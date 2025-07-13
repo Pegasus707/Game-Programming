@@ -1,0 +1,64 @@
+import pygame
+import sys
+pygame.init()
+width, height = 800, 600
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Basic game loop with Restart")
+font = pygame.font.SysFont("Arial", 36)
+game_running = True
+game_over = False
+clock = pygame.time.Clock()
+while game_running:
+    screen.fill((255, 255, 255))
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                game_running = False
+            if event.key == pygame.K_r:
+                game_over = False
+            if event.key == pygame.K_UP:
+                text = font.render("Up arrow key pressed", True, (0, 0, 255))
+                screen.blit(text, (50, height // 1.5 ))
+                pygame.display.flip()
+                pygame.time.wait(500)
+               
+            if event.key == pygame.K_DOWN:
+                text = font.render("Down arrow key pressed", True, (0, 0, 255))
+                screen.blit(text, (50, height // 1.5))
+                pygame.display.flip()
+                pygame.time.wait(500)
+            if event.key == pygame.K_LEFT:
+                text = font.render("left arrow key pressed", True, (0, 0, 255))
+                screen.blit(text, (50, height // 1.5))
+                pygame.display.flip()
+                pygame.time.wait(500)
+            if event.key == pygame.K_RIGHT:
+                text = font.render("right arrow key pressed", True, (0, 0, 255))
+                screen.blit(text, (50, height // 1.5))
+                pygame.display.flip()
+                pygame.time.wait(500)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = event.pos
+            text = font.render(f"Mouse clicked at ({mouse_x}, {mouse_y})", True, (0, 0, 255))
+            screen.blit(text, (50, height // 1.5))
+            pygame.display.flip()
+            pygame.time.wait(500)
+           
+       
+
+           
+    if not game_over:
+        text = font.render("Game running-Press Q to quit, R to restart", True, (0, 0, 0))
+        screen.blit(text, (50, height // 2))
+        pygame.display.flip()
+        pygame.time.wait(2000)
+        game_over = True
+    else:
+        text = font.render("Game over-press R to restart", True, (255, 0, 0))
+        screen.blit(text, (200, height // 2))
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
+sys.exit() 
